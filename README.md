@@ -1,65 +1,99 @@
-# Student Performance Predictor
-
-An AI-powered web application for analysing student datasets, training machine learning models, predicting academic performance, and identifying students who may need additional academic support.
+# 🎓 Student Performance Predictor
 
 <p align="center">
-  <a href="https://student-performance-predictor-ay67wvav7-iron-man17.vercel.app/">Live Demo</a> |
-  <a href="https://student-performance-predictor-f6xy.onrender.com/docs">API Documentation</a>
+  <img src="https://img.shields.io/badge/Project-Student%20Performance%20Predictor-16A765?style=for-the-badge" alt="Project Name"/>
+  <img src="https://img.shields.io/badge/AI-Machine%20Learning-blue?style=for-the-badge" alt="Machine Learning"/>
+  <img src="https://img.shields.io/badge/Status-Deployed-success?style=for-the-badge" alt="Deployment Status"/>
 </p>
 
-## Overview
+<p align="center">
+  An AI-powered web application for analysing student data, predicting academic performance, and generating meaningful insights using machine learning.
+</p>
 
-Student Performance Predictor transforms student data into meaningful insights using data analysis and machine learning. It provides a workflow for uploading datasets, analysing data, training models, generating predictions, and exporting results.
+<p align="center">
+  <a href="https://student-performance-predictor-ay67wvav7-iron-man17.vercel.app/">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-Visit_Website-16A765?style=for-the-badge" alt="Live Demo"/>
+  </a>
+  <a href="https://student-performance-predictor-f6xy.onrender.com/docs">
+    <img src="https://img.shields.io/badge/⚡_API-Documentation-3776AB?style=for-the-badge" alt="API Documentation"/>
+  </a>
+</p>
 
-## Features
+---
 
-- **Dataset Upload:** Upload student datasets in CSV format.
-- **Data Analysis:** Explore dataset statistics, features, and distributions.
-- **Data Preparation:** Identify and handle missing values where supported.
-- **Machine Learning:** Train models using prepared datasets.
-- **Performance Prediction:** Generate predictions using trained models.
-- **At-Risk Identification:** Highlight students who may need further academic review.
-- **Visual Analytics:** Explore data and model insights through visualisations.
-- **Results Export:** Download supported results for further analysis.
+## 📌 About the Project
 
-## Live Application
+**Student Performance Predictor** is a machine-learning-based web application designed to analyse student datasets and predict academic performance.
 
-| Component | URL |
+The application allows users to upload CSV datasets, explore data insights, prepare data, train machine-learning models, generate predictions, and export available results through a web interface.
+
+## ✨ Key Features
+
+- 📂 **Dataset Upload** — Upload student datasets in CSV format.
+- 📊 **Data Analysis** — Explore dataset statistics and distributions.
+- 🧹 **Data Preparation** — Identify and handle missing values where supported.
+- 🤖 **Model Training** — Train machine-learning models on prepared datasets.
+- 🎯 **Performance Prediction** — Generate predictions using trained models.
+- ⚠️ **At-Risk Identification** — Highlight records that may need further review.
+- 📈 **Visual Analytics** — Explore data and model insights.
+- 📥 **Export Results** — Download supported results for further analysis.
+
+## 🌐 Live Deployment
+
+| Service | Link |
 |---|---|
-| Frontend | https://student-performance-predictor-ay67wvav7-iron-man17.vercel.app/ |
-| Backend API | https://student-performance-predictor-f6xy.onrender.com/ |
-| API Documentation | https://student-performance-predictor-f6xy.onrender.com/docs |
+| 🖥️ Frontend | [Open Website](https://student-performance-predictor-ay67wvav7-iron-man17.vercel.app/) |
+| ⚙️ Backend API | [Open Backend](https://student-performance-predictor-f6xy.onrender.com/) |
+| 📘 API Documentation | [Explore API Docs](https://student-performance-predictor-f6xy.onrender.com/docs) |
 
-## Technology Stack
+## 🛠️ Tech Stack
 
-| Layer | Technologies |
+| Technology | Purpose |
 |---|---|
-| Frontend | React, Vite, TypeScript, CSS |
-| Backend | Python, FastAPI, Uvicorn |
-| Data Processing | Pandas, NumPy |
-| Machine Learning | Scikit-learn |
-| Data Visualisation | Plotly |
-| Model Explainability | SHAP, where enabled |
-| Deployment | Vercel and Render |
+| ⚛️ React | Frontend user interface |
+| ⚡ Vite | Frontend development and build |
+| 🔷 TypeScript | Type-safe frontend development |
+| 🎨 CSS | Styling and responsive UI |
+| 🐍 Python | Backend and data processing |
+| 🚀 FastAPI | REST API development |
+| 🦄 Uvicorn | ASGI server |
+| 🐼 Pandas | Dataset manipulation |
+| 🔢 NumPy | Numerical computation |
+| 🧠 Scikit-learn | Machine learning |
+| 📊 Plotly | Interactive visualisations |
+| 🔍 SHAP | Model explainability, where enabled |
+| ▲ Vercel | Frontend hosting |
+| ☁️ Render | Backend hosting |
 
-## Application Workflow
+## 🔄 Application Workflow
 
-1. Upload a supported student dataset.
-2. Analyse the dataset and inspect its features.
-3. Prepare the data and handle missing values when necessary.
-4. Train a machine learning model.
-5. Generate student performance predictions.
-6. Review and export the available results.
+```text
+📂 Upload Dataset
+       ↓
+📊 Analyse Data
+       ↓
+🧹 Prepare Dataset
+       ↓
+🤖 Train Model
+       ↓
+🎯 Generate Predictions
+       ↓
+📈 Review Results
+       ↓
+📥 Export Results
+```
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 
-- Python
-- Node.js and npm
-- Git
+Install the following tools before running the project locally:
 
-### 1. Clone the Repository
+- 🐍 Python
+- 🟢 Node.js and npm
+- 🐙 Git
+
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone <YOUR_GITHUB_REPOSITORY_URL>
@@ -68,36 +102,36 @@ cd student-performance-predictor
 
 Replace the placeholder with your actual GitHub repository URL.
 
-### 2. Set Up the Backend
+### 2️⃣ Set Up the Backend
 
 ```bash
 cd backend
 python -m venv .venv
 ```
 
-Activate the virtual environment on Windows:
+**Activate the virtual environment on Windows:**
 
 ```bat
 .venv\Scripts\activate
 ```
 
-Install dependencies:
+**Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Start the backend server:
+**Start the backend server:**
 
 ```bash
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Backend URL: `http://127.0.0.1:8000`
+🔗 Backend: `http://127.0.0.1:8000`
 
-API documentation: `http://127.0.0.1:8000/docs`
+📘 API documentation: `http://127.0.0.1:8000/docs`
 
-### 3. Set Up the Frontend
+### 3️⃣ Set Up the Frontend
 
 Open a second terminal from the project root:
 
@@ -107,9 +141,9 @@ npm install
 npm run dev
 ```
 
-Open the local URL displayed in the terminal, usually `http://localhost:5173`.
+🌍 Open the local URL displayed by Vite, usually `http://localhost:5173`.
 
-### 4. Build for Production
+### 4️⃣ Build for Production
 
 From the frontend directory:
 
@@ -117,70 +151,77 @@ From the frontend directory:
 npm run build
 ```
 
-The production build is normally generated in `frontend/dist`.
+📦 The production build is normally generated in `frontend/dist`.
 
-## Deployment
+## ☁️ Deployment Guide
 
-### Frontend — Vercel
+### ▲ Frontend — Vercel
 
-- Root Directory: `frontend`
-- Build Command: `npm run build`
-- Output Directory: `dist`
+- 📁 Root Directory: `frontend`
+- 🔨 Build Command: `npm run build`
+- 📦 Output Directory: `dist`
 
-### Backend — Render
+### 🚀 Backend — Render
 
-- Root Directory: `backend`
-- Build Command: `pip install -r requirements.txt`
-- Start Command:
+- 📁 Root Directory: `backend`
+- 🔨 Build Command: `pip install -r requirements.txt`
+- ▶️ Start Command:
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-Ensure that production API routing points to the deployed backend and that API paths match the routes defined by the application.
+⚠️ Ensure the production frontend routes API requests to the deployed backend and that the configured API paths match the backend routes.
 
-## Troubleshooting
+## 🧪 Troubleshooting
 
-| Issue | Suggested Solution |
+| Error | Possible Solution |
 |---|---|
-| CSV upload fails | Verify the CSV format, headers, and required columns. |
-| API returns 404 | Check the request URL and confirm the endpoint exists. |
-| API returns 500 | Review the backend logs on Render. |
-| Frontend cannot connect to backend | Verify the production API URL and Vercel rewrite configuration. |
-| Backend fails locally | Activate the correct Python environment and install the required dependencies. |
+| ❌ CSV upload fails | Check CSV format, headers, and required columns. |
+| 🔎 API returns 404 | Verify the request URL and API endpoint. |
+| 🔥 API returns 500 | Check backend logs on Render. |
+| 🔌 Frontend cannot connect | Verify the API URL and Vercel rewrite configuration. |
+| 🐍 Backend fails locally | Activate the correct Python environment and install dependencies. |
 
-## Privacy and Responsible Use
+## 🔐 Privacy & Responsible AI
 
-- Use anonymised or synthetic datasets during testing.
-- Never commit private student records, credentials, `.env` files, or generated exports to GitHub.
-- Protect student information and follow applicable institutional privacy policies.
-- Evaluate model performance and potential bias before using predictions in practice.
-- Treat predictions as decision-support information, not as the sole basis for educational decisions.
+- 🛡️ Use anonymised or synthetic datasets for testing.
+- 🔑 Never commit credentials, `.env` files, or private student records to GitHub.
+- 🔒 Protect student information and follow applicable institutional policies.
+- ⚖️ Evaluate model performance and potential bias before using predictions.
+- 🎓 Treat predictions as decision-support information, not as the sole basis for educational decisions.
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 student-performance-predictor/
-├── backend/
-├── frontend/
-├── .gitignore
-└── README.md
+│
+├── 📂 backend/          # FastAPI and machine-learning backend
+├── 📂 frontend/         # React + Vite frontend
+├── 📄 .gitignore        # Git ignored files
+└── 📘 README.md         # Project documentation
 ```
 
-This is a simplified overview; the actual repository may contain additional files and directories.
+*This is a simplified overview; the actual repository may contain additional files and folders.*
 
-## Future Improvements
+## 🔮 Future Enhancements
 
-- Enhanced model evaluation and explainability.
-- Improved dataset validation and reporting.
-- Secure data persistence and user-session isolation.
-- Additional visual analytics and prediction insights.
+- 📊 Enhanced model evaluation and reporting
+- 🔍 Improved model explainability
+- 🔐 Secure user-session isolation
+- 💾 Reliable dataset and model persistence
+- 📈 Additional visual analytics
 
-## License
+## 📄 License
 
-No open-source license is currently specified. Add a `LICENSE` file if you intend to distribute the project under a particular open-source license.
+No open-source license is specified. Add a `LICENSE` file if you intend to distribute the project under a particular license.
 
 ---
 
-**Student Performance Predictor**  
-*Turning student data into actionable academic insights.*
+<p align="center">
+  <b>🎓 Student Performance Predictor</b>
+  <br/>
+  Turning student data into actionable academic insights.
+  <br/><br/>
+  ⭐ If you find this project useful, consider giving the repository a star!
+</p>
