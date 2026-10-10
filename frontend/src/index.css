@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Green glass theme. Light is the primary theme and lives on :root;
+     [data-theme='dark'] is a deep green-black counterpart. Values are "R G B"
+     so Tailwind alpha modifiers work. */
+  :root {
+    --color-canvas: 238 246 240;     /* page background   #EEF6F0 */
+    --color-panel: 248 252 249;      /* sidebar / panels */
+    --color-surface: 255 255 255;    /* cards (alpha applied in .glass) */
+    --color-elevated: 244 250 246;   /* table headers, wells */
+    --color-line: 216 232 220;       /* border            #D8E8DC */
+    --color-ink: 23 43 31;           /* primary text      #172B1F */
+    --color-muted: 100 117 104;      /* secondary text    #647568 */
+    --color-faint: 134 150 138;
+
+    --color-brand: 22 167 101;       /* primary green     #16A765 */
+    --color-brand-mid: 22 167 101;   /* accent icons/text */
+    --color-brand-deep: 18 134 80;   /* hover green       #128650 */
+    --color-brand-soft: 221 244 229; /* soft mint         #DDF4E5 */
+    --color-on-brand: 255 255 255;   /* text on green fills */
+
+    --color-amber: 196 122 12;
+    --color-amber-soft: 253 240 214;
+    --color-danger: 201 66 66;
+    --color-danger-soft: 252 230 228;
+    --color-ok: 22 167 101;
+    --color-ok-soft: 221 244 229;
+
+    /* KPI accents: green leads; others keep metrics distinguishable. */
+    --accent-blue: 52 120 190;
+    --accent-blue-soft: 224 236 250;
+    --accent-violet: 112 96 186;
+    --accent-violet-soft: 235 231 250;
+    --accent-emerald: 22 167 101;
+    --accent-emerald-soft: 221 244 229;
+    --accent-rose: 201 66 66;
+    --accent-rose-soft: 252 230 228;
+    --accent-amber: 196 122 12;
+    --accent-amber-soft: 253 240 214;
+    --accent-cyan: 14 138 150;
+    --accent-cyan-soft: 220 243 245;
+
+    --glass-surface-alpha: 0.82;
+    --glass-surface-strong-alpha: 0.9;
+    --glass-border-alpha: 1;
+    --glass-blur: 18px;
+    --bg-grad-a: 238 246 240;
+    --bg-grad-b: 227 241 232;
+    --shadow-rgb: 22 80 50;
+    --shadow-a1: 0.07;
+    --shadow-a2: 0.16;
+    --shadow-a3: 0.22;
+    --inset-hi: 0.8;
+
+    --bg: rgb(var(--color-canvas));
+    --surface: rgb(var(--color-panel));
+    --surface-elevated: rgb(var(--color-elevated));
+    --border: rgb(var(--color-line));
+    --green: rgb(var(--color-brand));
+    --green-hover: rgb(var(--color-brand-deep));
+    --mint: rgb(var(--color-brand-soft));
+    --text-primary: rgb(var(--color-ink));
+    --text-secondary: rgb(var(--color-muted));
+    --text-muted: rgb(var(--color-faint));
+  }
+
+  [data-theme='dark'] {
+    --color-canvas: 9 19 14;
+    --color-panel: 13 26 19;
+    --color-surface: 18 33 25;
+    --color-elevated: 24 43 32;
+    --color-line: 37 60 46;
+    --color-ink: 232 244 236;
+    --color-muted: 150 170 156;
+    --color-faint: 110 128 116;
+
+    --color-brand: 34 184 114;
+    --color-brand-mid: 80 215 150;
+    --color-brand-deep: 80 215 150;
+    --color-brand-soft: 17 46 31;
+    --color-on-brand: 5 22 13;
+
+    --color-amber: 224 160 64;
+    --color-amber-soft: 44 33 14;
+    --color-danger: 224 101 101;
+    --color-danger-soft: 48 22 22;
+    --color-ok: 80 215 150;
+    --color-ok-soft: 17 46 31;
+
+    --accent-blue: 107 167 219;
+    --accent-blue-soft: 20 36 52;
+    --accent-violet: 156 140 224;
+    --accent-violet-soft: 30 26 52;
+    --accent-emerald: 80 215 150;
+    --accent-emerald-soft: 17 46 31;
+    --accent-rose: 224 101 101;
+    --accent-rose-soft: 48 22 22;
+    --accent-amber: 224 160 64;
+    --accent-amber-soft: 44 33 14;
+    --accent-cyan: 90 190 200;
+    --accent-cyan-soft: 16 40 44;
+
+    --glass-surface-alpha: 0.7;
+    --glass-surface-strong-alpha: 0.82;
+    --bg-grad-a: 9 19 14;
+    --bg-grad-b: 11 23 17;
+    --shadow-rgb: 0 0 0;
+    --shadow-a1: 0.3;
+    --shadow-a2: 0.55;
+    --shadow-a3: 0.7;
+    --inset-hi: 0.03;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  html[data-theme='dark'] {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply text-ink font-sans antialiased transition-colors duration-150;
+    background:
+      radial-gradient(900px 480px at 6% -10%, rgb(var(--color-brand) / 0.12), transparent 60%),
+      radial-gradient(700px 420px at 100% 0%, rgb(var(--color-brand-mid) / 0.07), transparent 55%),
+      linear-gradient(180deg, rgb(var(--bg-grad-a)) 0%, rgb(var(--bg-grad-b)) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* Keyboard focus stays visible everywhere; pointer clicks stay quiet. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-canvas rounded-sm;
+  }
+
+  ::selection {
+    @apply bg-brand/25;
+  }
+
+  /* Scrollbars follow the theme. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-brand) / 0.45) transparent;
+  }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-brand) / 0.4);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-brand) / 0.7); background-clip: padding-box; }
+
+  /* Native form controls and autofill follow the theme. */
+  input[type='checkbox'], input[type='radio'], input[type='range'], progress { accent-color: rgb(var(--color-brand)); }
+  input:-webkit-autofill {
+    -webkit-text-fill-color: rgb(var(--color-ink));
+    -webkit-box-shadow: 0 0 0 1000px rgb(var(--color-elevated)) inset;
+  }
+  select option { background: rgb(var(--color-panel)); color: rgb(var(--color-ink)); }
+}
+
+@layer components {
+  /* --- glass surfaces ---------------------------------------------
+     White glass, thin green-tinted border, soft shadow. Green only appears
+     on hover/active states so it stays an accent. */
+
+  .glass {
+    background: rgb(var(--color-surface) / var(--glass-surface-alpha));
+    backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+    border: 1px solid rgb(var(--color-line) / var(--glass-border-alpha));
+  }
+
+  .glass-strong {
+    background: rgb(var(--color-panel) / var(--glass-surface-strong-alpha));
+    backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+    border: 1px solid rgb(var(--color-line) / var(--glass-border-alpha));
+  }
+
+  .card {
+    @apply glass rounded-card shadow-glass transition-[transform,box-shadow,border-color] duration-200;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:shadow-glass-lift hover:border-brand/40;
+  }
+
+  .panel {
+    @apply glass-strong rounded-panel shadow-glass;
+  }
+
+  .field-label {
+    @apply block text-[12.5px] font-medium text-muted mb-1;
+  }
+
+  .input {
+    @apply w-full h-9 px-3 bg-canvas/60 border border-line rounded-xl text-sm text-ink
+           transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-muted/60
+           hover:border-brand/40 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20
+           disabled:bg-canvas disabled:text-muted disabled:cursor-not-allowed;
+  }
+
+  /* --- buttons ---------------------------------------------------------
+     Primary: green fill, white text (primary actions only).
+     Secondary: white with a green outline. Ghost: text only. */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 h-9 px-4 rounded-xl text-[13px] font-semibold
+           transition-[transform,box-shadow,background-color,border-color,color,opacity] duration-200
+           active:scale-[0.97]
+           disabled:opacity-45 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:translate-y-0 disabled:hover:shadow-none;
+  }
+
+  .btn-primary {
+    @apply btn border border-transparent shadow-[0_6px_16px_-8px_rgb(var(--color-brand)/0.7)]
+           hover:-translate-y-px hover:bg-brand-deep hover:shadow-[0_10px_22px_-8px_rgb(var(--color-brand)/0.65)];
+    color: rgb(var(--color-on-brand));
+    background: linear-gradient(135deg, rgb(var(--color-brand)) 0%, rgb(var(--color-brand-deep)) 100%);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+
+  .btn-secondary {
+    @apply btn bg-surface text-brand-deep border border-brand/50
+           hover:-translate-y-px hover:border-brand hover:bg-brand-soft hover:shadow-[0_8px_20px_-12px_rgb(var(--color-brand)/0.5)];
+  }
+
+  .btn-ghost {
+    @apply btn text-muted bg-transparent border border-transparent hover:text-ink hover:bg-surface/70;
+  }
+
+  .btn-danger {
+    @apply btn text-white border border-transparent shadow-[0_8px_20px_-10px_rgb(var(--color-danger)/0.6)]
+           hover:-translate-y-px;
+    background: linear-gradient(135deg, rgb(var(--color-danger) / 0.9) 0%, rgb(var(--color-danger)) 100%);
+  }
+
+  .table-scroll {
+    @apply overflow-x-auto;
+  }
+
+  .route-transition {
+    animation: rise 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* --- KPI cards -------------------------------------------------------
+     Icon, label, large value, small status. Green is a hairline on top and
+     a tinted icon chip; the card itself stays charcoal. */
+  .kpi-card {
+    @apply card p-4 relative overflow-hidden hover:border-brand/40;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 16px;
+    right: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--kpi-accent, rgb(var(--color-brand))) 50%, transparent);
+    opacity: 0.7;
+  }
+
+  .kpi-card .kpi-icon {
+    @apply w-9 h-9 rounded-xl flex items-center justify-center mb-2 border;
+    background: var(--kpi-icon-bg, rgb(var(--color-brand-soft)));
+    color: var(--kpi-accent, rgb(var(--color-brand)));
+    border-color: color-mix(in srgb, var(--kpi-accent, rgb(var(--color-brand))) 28%, transparent);
+  }
+
+  .kpi-blue { --kpi-accent: rgb(var(--accent-blue)); --kpi-icon-bg: rgb(var(--accent-blue-soft)); }
+  .kpi-violet { --kpi-accent: rgb(var(--accent-violet)); --kpi-icon-bg: rgb(var(--accent-violet-soft)); }
+  .kpi-emerald { --kpi-accent: rgb(var(--accent-emerald)); --kpi-icon-bg: rgb(var(--accent-emerald-soft)); }
+  .kpi-rose { --kpi-accent: rgb(var(--accent-rose)); --kpi-icon-bg: rgb(var(--accent-rose-soft)); }
+  .kpi-amber { --kpi-accent: rgb(var(--accent-amber)); --kpi-icon-bg: rgb(var(--accent-amber-soft)); }
+  .kpi-cyan { --kpi-accent: rgb(var(--accent-cyan)); --kpi-icon-bg: rgb(var(--accent-cyan-soft)); }
+  .kpi-brand { --kpi-accent: rgb(var(--color-brand)); --kpi-icon-bg: rgb(var(--color-brand-soft)); }
+
+  /* --- Sidebar ---------------------------------------------------------- */
+  .sidebar-expanded {
+    width: 252px;
+    transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-collapsed {
+    width: 68px;
+    transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Tooltip beside collapsed sidebar icons (portalled; positioned inline). */
+  .nav-tip {
+    @apply fixed z-[60] -translate-y-1/2 px-2.5 py-1 rounded-lg pointer-events-none
+           text-[12px] font-medium whitespace-nowrap text-ink border border-brand/35 shadow-glass-lift;
+    background: rgb(var(--color-panel));
+  }
+
+  /* --- Workflow step pills ---------------------------------------------- */
+  .workflow-step {
+    @apply flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[11.5px] font-semibold transition-all duration-200;
+  }
+
+  .workflow-step-done {
+    @apply border border-brand/25 bg-brand-soft text-brand-deep;
+  }
+
+  .workflow-step-active {
+    @apply border border-brand/60 bg-brand/15 text-brand-deep shadow-[0_0_14px_-4px_rgb(var(--color-brand)/0.55)];
+  }
+
+  .workflow-step-pending {
+    @apply border border-line text-muted hover:text-ink hover:border-brand/30;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
