@@ -1,0 +1,9 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://student-performance-predictor-f6xy.onrender.com/api/:path*"
+    }
+  ]
+}
