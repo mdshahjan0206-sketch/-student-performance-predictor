@@ -1,46 +1,105 @@
-# EduPredict AI — Student Performance Predictor
+# Student Performance Predictor
 
-An end-to-end machine learning workspace for analysing student data, training models and
-predicting academic performance.
+An AI-powered web application for analysing student datasets, training machine learning models, predicting academic performance, and identifying students who may need additional academic support.
 
-This is the React + FastAPI version of the project. It replaces the original Streamlit
-application. Streamlit is not installed, imported or required anywhere.
+<p align="center">
+  <a href="https://student-performance-predictor-ay67wvav7-iron-man17.vercel.app/">Live Demo</a> |
+  <a href="https://student-performance-predictor-f6xy.onrender.com/docs">API Documentation</a>
+</p>
 
+## Overview
+
+Student Performance Predictor transforms student data into meaningful insights using data analysis and machine learning. It provides a workflow for uploading datasets, analysing data, training models, generating predictions, and exporting results.
+
+## Features
+
+- **Dataset Upload:** Upload student datasets in CSV format.
+- **Data Analysis:** Explore dataset statistics, features, and distributions.
+- **Data Preparation:** Identify and handle missing values where supported.
+- **Machine Learning:** Train models using prepared datasets.
+- **Performance Prediction:** Generate predictions using trained models.
+- **At-Risk Identification:** Highlight students who may need further academic review.
+- **Visual Analytics:** Explore data and model insights through visualisations.
+- **Results Export:** Download supported results for further analysis.
+
+## Live Application
+
+| Component | URL |
+|---|---|
+| Frontend | https://student-performance-predictor-ay67wvav7-iron-man17.vercel.app/ |
+| Backend API | https://student-performance-predictor-f6xy.onrender.com/ |
+| API Documentation | https://student-performance-predictor-f6xy.onrender.com/docs |
+
+## Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React, Vite, TypeScript, CSS |
+| Backend | Python, FastAPI, Uvicorn |
+| Data Processing | Pandas, NumPy |
+| Machine Learning | Scikit-learn |
+| Data Visualisation | Plotly |
+| Model Explainability | SHAP, where enabled |
+| Deployment | Vercel and Render |
+
+## Application Workflow
+
+1. Upload a supported student dataset.
+2. Analyse the dataset and inspect its features.
+3. Prepare the data and handle missing values when necessary.
+4. Train a machine learning model.
+5. Generate student performance predictions.
+6. Review and export the available results.
+
+## Getting Started
+
+### Prerequisites
+
+- Python
+- Node.js and npm
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd student-performance-predictor
 ```
-Upload  ->  Analyse  ->  Train  ->  Predict  ->  Export
-```
 
----
+Replace the placeholder with your actual GitHub repository URL.
 
-## Running it
-
-Two processes: a Python API and a Vite dev server. Start the backend first.
-
-### Backend
-
-Windows:
-
-```bat
-cd backend
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-macOS / Linux:
+### 2. Set Up the Backend
 
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+python -m venv .venv
 ```
 
-The API listens on `http://127.0.0.1:8000`. Interactive docs are at `/api/docs`.
+Activate the virtual environment on Windows:
 
-### Frontend
+```bat
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the backend server:
+
+```bash
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Backend URL: `http://127.0.0.1:8000`
+
+API documentation: `http://127.0.0.1:8000/docs`
+
+### 3. Set Up the Frontend
+
+Open a second terminal from the project root:
 
 ```bash
 cd frontend
@@ -48,203 +107,80 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. The dev server proxies `/api` to the backend, so both run on
-one origin in the browser.
+Open the local URL displayed in the terminal, usually `http://localhost:5173`.
 
-To build and serve the production bundle:
+### 4. Build for Production
+
+From the frontend directory:
 
 ```bash
 npm run build
-npm run preview
 ```
 
----
+The production build is normally generated in `frontend/dist`.
 
-## Requirements
+## Deployment
 
-* Python 3.10 or newer
-* Node.js 18 or newer
+### Frontend — Vercel
 
----
+- Root Directory: `frontend`
+- Build Command: `npm run build`
+- Output Directory: `dist`
 
-## Project layout
+### Backend — Render
 
+- Root Directory: `backend`
+- Build Command: `pip install -r requirements.txt`
+- Start Command:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
+
+Ensure that production API routing points to the deployed backend and that API paths match the routes defined by the application.
+
+## Troubleshooting
+
+| Issue | Suggested Solution |
+|---|---|
+| CSV upload fails | Verify the CSV format, headers, and required columns. |
+| API returns 404 | Check the request URL and confirm the endpoint exists. |
+| API returns 500 | Review the backend logs on Render. |
+| Frontend cannot connect to backend | Verify the production API URL and Vercel rewrite configuration. |
+| Backend fails locally | Activate the correct Python environment and install the required dependencies. |
+
+## Privacy and Responsible Use
+
+- Use anonymised or synthetic datasets during testing.
+- Never commit private student records, credentials, `.env` files, or generated exports to GitHub.
+- Protect student information and follow applicable institutional privacy policies.
+- Evaluate model performance and potential bias before using predictions in practice.
+- Treat predictions as decision-support information, not as the sole basis for educational decisions.
+
+## Project Structure
+
+```text
 student-performance-predictor/
 ├── backend/
-│   ├── app/
-│   │   ├── main.py              FastAPI app, CORS, error handlers
-│   │   ├── api/                 dataset, analysis, model, prediction, jobs routes
-│   │   ├── core/                config (paths, model registry, keywords), errors
-│   │   ├── ml/                  helpers, preprocessing, training, prediction, eda
-│   │   ├── schemas/             request bodies
-│   │   ├── services/            store (state), dataset, analysis, model, prediction
-│   │   └── utils/               file handling, JSON serialisation
-│   ├── tests/                   API tests, equivalence tests, benchmark
-│   ├── uploads/                 uploaded files (git-ignored)
-│   ├── models/                  fitted pipelines (git-ignored)
-│   ├── outputs/                 prediction exports (git-ignored)
-│   └── requirements.txt
 ├── frontend/
-│   ├── src/
-│   │   ├── charts/              Plotly wrapper and every chart
-│   │   ├── components/          UI primitives, data table, dropzone
-│   │   ├── hooks/               workspace state, async loader
-│   │   ├── layouts/             sidebar, status header, workflow rail
-│   │   ├── pages/               Home, Upload, Analysis, Train, Predict, About
-│   │   ├── services/            typed API client
-│   │   ├── types/               API payload types
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   ├── package.json
-│   └── vite.config.ts
-├── MIGRATION.md                 old-vs-new feature comparison and measurements
+├── .gitignore
 └── README.md
 ```
 
----
+This is a simplified overview; the actual repository may contain additional files and directories.
 
-## What it does
+## Future Improvements
 
-### Upload
+- Enhanced model evaluation and explainability.
+- Improved dataset validation and reporting.
+- Secure data persistence and user-session isolation.
+- Additional visual analytics and prediction insights.
 
-CSV and Excel files, validated on arrival: unsupported formats, empty files, unreadable
-files and duplicate column names are all rejected with a readable message. Row and column
-counts, file size, per-column dtypes, missing-value counts and duplicate-row counts are
-computed once and cached.
+## License
 
-Target columns are detected by name against a list of student-performance keywords
-(`exam_score`, `grade`, `pass_fail`, `performance`, `gpa` and others). If nothing matches,
-you pick a column manually on the training page. This keeps the tool focused on student
-performance rather than turning into a general-purpose model builder.
-
-### Analysis
-
-Dataset overview, distribution (histogram or box plot), correlation heatmap, missing-value
-chart, and scatter comparison between two numeric columns. Charts that do not apply say so:
-a box plot on a text column, a heatmap with fewer than two numeric columns, a scatter with
-the same column on both axes.
-
-Filters are exploratory. They preview a subset and export it as CSV, and they never replace
-the dataset used for training or prediction.
-
-### Training
-
-The problem type is detected from the target column and can be overridden. A model is
-recommended based on dataset size. Six models are available:
-
-| Classification | Regression |
-| --- | --- |
-| Logistic Regression | Linear Regression |
-| Decision Tree | Decision Tree Regressor |
-| Random Forest | Random Forest Regressor |
-
-Before any fitting happens, the dataset is checked: target present and not all null, enough
-rows, enough classes, problem type compatible with the target, plus non-blocking warnings
-for class imbalance, high dimensionality, small samples and missing values. An unsuitable
-combination is refused with an explanation rather than a scikit-learn exception.
-
-Training runs as a background job, so the interface stays responsive. The status shown
-(`queued`, `processing`, `training`, `evaluating`, `completed`, `failed`) is set by the
-backend as each stage actually happens.
-
-Results: accuracy, precision, recall and F1 for classification; MAE, MSE, RMSE and R² for
-regression. Plus a confusion matrix, a ROC curve for binary targets with probability
-scores, a residual plot for regression, and feature importance for tree-based models.
-
-### Prediction
-
-Single-student prediction builds its form from the trained model's own feature columns,
-with ranges and defaults taken from the dataset. Batch prediction validates the uploaded
-file against the required columns, blocks on missing ones, warns about extra ones, coerces
-compatible types, then adds `Prediction` and, where the model supports it, `Confidence` and
-`Predicted Class`.
-
-Results are paged from the server and exported as CSV.
+No open-source license is currently specified. Add a `LICENSE` file if you intend to distribute the project under a particular open-source license.
 
 ---
 
-## State and model invalidation
-
-Streamlit's `session_state` is replaced by backend-managed state behind identifiers:
-`dataset_id`, `model_id`, `job_id`, `prediction_id`.
-
-Uploading a new dataset clears the active model, because a model fitted on the previous
-data is not valid for the new data. Every model also records the dataset it was trained on,
-and the prediction endpoints refuse a model whose dataset is not the active one. A model
-trained on dataset A cannot be used after dataset B is uploaded, by any route.
-
----
-
-## API
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| POST | `/api/dataset/upload` | Upload and profile a dataset |
-| GET | `/api/dataset/{id}/summary` | Metadata, column profiles, overview |
-| GET | `/api/dataset/{id}/preview` | One page of rows, with search |
-| GET | `/api/dataset/{id}/statistics` | Descriptive statistics |
-| GET | `/api/dataset/{id}/filter-options` | Ranges and category values |
-| POST | `/api/dataset/{id}/filter` | Filtered preview (exploratory only) |
-| POST | `/api/dataset/{id}/filter/download` | Filtered rows as CSV |
-| GET | `/api/analysis/{id}/overview` | Six overview figures |
-| GET | `/api/analysis/{id}/histogram` | Distribution of one column |
-| GET | `/api/analysis/{id}/boxplot` | Five-number summary and outliers |
-| GET | `/api/analysis/{id}/correlation` | Correlation matrix |
-| GET | `/api/analysis/{id}/missing` | Missing values per column |
-| GET | `/api/analysis/{id}/scatter` | Two numeric columns, sampled |
-| GET | `/api/model/config/{dataset_id}` | Targets, columns, model options |
-| POST | `/api/model/target-analysis` | Problem type and recommendation |
-| POST | `/api/model/preflight` | Validation without training |
-| POST | `/api/model/train` | Queue a training job |
-| GET | `/api/model/history/{dataset_id}` | Models trained on this dataset |
-| GET | `/api/model/{model_id}` | Metadata, metrics and chart data |
-| GET | `/api/model/{model_id}/metrics` | Metrics only |
-| GET | `/api/model/{model_id}/feature-schema` | Fields for the prediction form |
-| POST | `/api/predict/single` | Score one record |
-| POST | `/api/predict/batch` | Score an uploaded file |
-| GET | `/api/predictions/{id}` | One page of results |
-| GET | `/api/predictions/{id}/download` | All results as CSV |
-| GET | `/api/jobs/{job_id}` | Training job status |
-| GET | `/api/session/status` | Active dataset, model, stage |
-| GET | `/api/health` | Liveness |
-
-Failures return a consistent envelope and never include a traceback, stack trace, internal
-path or raw Python exception text:
-
-```json
-{ "success": false, "error": { "code": "INVALID_DATASET", "message": "Required columns are missing." } }
-```
-
----
-
-## Tests
-
-```bash
-cd backend
-python -m pytest tests -q
-```
-
-56 tests: API coverage for upload, validation, analysis, filtering, training, prediction,
-downloads and model invalidation, plus 20 tests that compare this implementation against
-the original Streamlit modules numerically. See `MIGRATION.md`.
-
-Measured performance on a 120,000-row dataset:
-
-```bash
-uvicorn app.main:app          # in one terminal
-python tests/benchmark.py     # in another
-```
-
----
-
-## Privacy
-
-Uploaded datasets stay on the machine running the backend. Files are parsed, analysed,
-trained and scored in that process. Nothing is sent to a third-party service, and the only
-things written to disk are the uploaded file, the fitted model and prediction output, all
-inside `backend/`.
-
----
-
-Built by Mohamed Shahjan. B.E. Computer Science Engineering.
+**Student Performance Predictor**  
+*Turning student data into actionable academic insights.*
