@@ -141,6 +141,51 @@ export function clearCache(prefix?: string) {
 
 // --- dataset -----------------------------------------------------------
 
+const UPLOAD_TIMEOUT_MS = 180_000
+
+interface UploadReply {
+  dataset?: DatasetSummary
+  session?: SessionStatus
+  error?: { code?: string; message?: string; details?: Record<string, unknown> }
+}
+
+/** Build the error for a failed upload. The backend's own validation message
+ *  always wins. Only when the reply is not the backend's JSON envelope (an
+ *  HTML error page from a proxy, a gateway timeout, a wrong route) is a
+ *  status-based explanation used, so the person is never told "try again"
+ *  about a problem that retrying cannot fix. */
+function uploadFailure(status: number, body: UploadReply, raw: string): ApiRequestError {
+  if (body.error?.message) {
+    return new ApiRequestError(body.error.code ?? 'UPLOAD_FAILED', body.error.message, body.error.details)
+  }
+  if (status >= 200 && status < 300) {
+    return new ApiRequestError(
+      'UNEXPECTED_RESPONSE',
+      'The server accepted the file but sent back an unexpected reply, so the dataset could not be opened. Try again, and report it if it keeps happening.',
+    )
+  }
+  if (status === 0 || status === 502 || status === 503 || status === 504) {
+    return new ApiRequestError(
+      'SERVER_UNAVAILABLE',
+      `The server is not responding right now (HTTP ${status}). If it was idle it may still be starting up, so wait a minute and try again. Your file was not rejected.`,
+    )
+  }
+  if (status === 404) {
+    return new ApiRequestError(
+      'UPLOAD_ROUTE_NOT_FOUND',
+      'The upload address was not found on the server (HTTP 404). This is a deployment problem, not a problem with your file.',
+    )
+  }
+  if (status === 413) {
+    return new ApiRequestError('FILE_TOO_LARGE', 'The file is larger than the server accepts (HTTP 413).')
+  }
+  const looksLikeHtml = /^\s*<(!doctype|html)/i.test(raw)
+  return new ApiRequestError(
+    'UPLOAD_FAILED',
+    `The server returned an unexpected ${looksLikeHtml ? 'web page' : 'reply'} (HTTP ${status}) instead of a validation result. This is a server problem, not a problem with your file.`,
+  )
+}
+
 export async function uploadDataset(
   file: File,
   onProgress?: (percent: number) => void,
@@ -160,23 +205,23 @@ export async function uploadDataset(
       }
     }
 
+    // A cold or overloaded server can take a while to answer, and the browser
+    // would otherwise wait indefinitely behind a spinner.
+    xhr.timeout = UPLOAD_TIMEOUT_MS
+
     xhr.onload = () => {
-      let body: { dataset?: DatasetSummary; session?: SessionStatus; error?: { code: string; message: string } } = {}
+      let body: UploadReply = {}
       try {
-        body = JSON.parse(xhr.responseText)
+        const parsed: unknown = JSON.parse(xhr.responseText)
+        if (parsed && typeof parsed === 'object') body = parsed as UploadReply
       } catch {
-        /* handled below */
+        /* not JSON: described by uploadFailure() below */
       }
       if (xhr.status >= 200 && xhr.status < 300 && body.dataset) {
         clearCache()
         resolve({ dataset: body.dataset, session: body.session as SessionStatus })
       } else {
-        reject(
-          new ApiRequestError(
-            body.error?.code ?? 'UPLOAD_FAILED',
-            body.error?.message ?? 'The file could not be uploaded. Try again.',
-          ),
-        )
+        reject(uploadFailure(xhr.status, body, xhr.responseText))
       }
     }
 
@@ -184,9 +229,19 @@ export async function uploadDataset(
       reject(
         new ApiRequestError(
           'NETWORK_ERROR',
-          'Cannot reach the EduPredict server. Check that the backend is running, then try again.',
+          'Cannot reach the EduPredict server. Check your connection, then try again. If the server was idle it may still be starting up.',
         ),
       )
+
+    xhr.ontimeout = () =>
+      reject(
+        new ApiRequestError(
+          'UPLOAD_TIMEOUT',
+          'The server took too long to respond. If it was idle it may still be waking up, so wait a minute and try again.',
+        ),
+      )
+
+    xhr.onabort = () => reject(new ApiRequestError('UPLOAD_ABORTED', 'The upload was cancelled before it finished.'))
 
     xhr.send(form)
   })
